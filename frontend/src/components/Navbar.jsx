@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Navbar.css";
+import AnalysisModal from "./AnalysisModal"; // ✅ Import modal inside Navbar
 
-const Navbar = ({ onAnalyzeClick }) => {
+const Navbar = () => {
+    const [isModalOpen, setModalOpen] = useState(false);
+
     return (
         <nav className="navbar">
             <div className="nav-container">
-                {/* Logo or Brand Name */}
                 <span className="logo">Biological</span>
 
-                {/* Analyze Now Button */}
-                <button className="analyze-btn" onClick={onAnalyzeClick}>
+                {/* ✅ Analyze Now button opens the modal */}
+                <button className="analyze-btn" onClick={() => setModalOpen(true)}>
                     Analyze Now
                 </button>
             </div>
+
+            {/* ✅ Modal is now controlled by Navbar */}
+            <AnalysisModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
         </nav>
     );
 };
 
 export default Navbar;
+
+
