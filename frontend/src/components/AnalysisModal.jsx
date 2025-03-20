@@ -1,5 +1,5 @@
 import React from "react";
-import "./AnalysisModal.css"; // Import modal styles
+import "../styles/AnalysisModal.css"; // Import modal styles
 
 const AnalysisModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null; // Don't render when closed

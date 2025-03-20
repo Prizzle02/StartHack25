@@ -1,20 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onAnalyzeClick }) => {
     return (
         <nav className="navbar">
             <div className="nav-container">
-                {/* Logo or Brand Nam*/}
-                <Link to="/" className="logo">Biologicalde</Link>
+                {/* Logo or Brand Name */}
+                <span className="logo">Biological</span>
 
-                {/* Navigation Links */}
-                <div className="nav-links">
-                <button className="analyze-btn" onClick={() => setShowModal(true)}>
-                Analyze Now
-            </button>
-                </div>
+                {/* Analyze Now Button */}
+                <button className="analyze-btn" onClick={onAnalyzeClick}>
+                    Analyze Now
+                </button>
             </div>
         </nav>
     );
