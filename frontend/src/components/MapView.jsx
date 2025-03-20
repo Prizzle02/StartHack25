@@ -31,7 +31,7 @@ const MapView = () => {
     };
 
     const locations = [
-        { name: "São Pedro", lat: -22.5487, lng: -47.9100 },
+        { name: "Farm 1", lat: -12.545524, lng: -55.002676 },
         { name: "Mato Grosso 🇧🇷", lat: -12.5424, lng: -55.7213 },
         { name: "Cerrado Region 🇧🇷", lat: -15.6000, lng: -47.8000 },
     ];
