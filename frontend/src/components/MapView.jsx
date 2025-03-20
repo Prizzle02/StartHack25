@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, ImageOverlay, useMap } from "react-leaflet";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import FarmPolygon from "../components/FarmPolygon";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
+import domtoimage from "dom-to-image";
 
 const MoveMapToLocation = ({ lat, lng }) => {
     const map = useMap();
@@ -17,6 +18,9 @@ const MoveMapToLocation = ({ lat, lng }) => {
 const MapView = () => {
     const [lat, setLat] = useState(-12.5000);
     const [lng, setLng] = useState(-55.6400);
+    const [ndviImage, setNdviImage] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const mapRef = useRef(null);
     const navigate = useNavigate(); // ✅ Hook for navigation
 
     const handleUpdateLocation = () => {
@@ -42,6 +46,27 @@ const MapView = () => {
         setLng(lng);
     };
 
+    const captureAndSendMap = async () => {
+        if (!mapRef.current) return;
+
+        try {
+            const dataUrl = await domtoimage.toPng(mapRef.current);
+
+            const response = await fetch("http://localhost:5000/upload", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ image: dataUrl }),
+            });
+
+            const result = await response.json();
+            if (result.ndvi_image) {
+                setNdviImage(result.ndvi_image);
+            }
+        } catch (error) {
+            console.error("Error capturing or sending the map:", error);
+        }
+    };
+
     return (
         <div className="map-container">
             {/* Sidebar */}
@@ -58,6 +83,8 @@ const MapView = () => {
                     </button>
                 ))}
 
+                <button onClick={captureAndSendMap} className="capture-button">
+                    Capture & Analyze
                 {/* ✅ Button to Navigate to Predictive Model Page */}
                 <button className="predictive-model-btn" onClick={() => navigate("/predictive-model")}>
                     Go to Predictive Model
@@ -65,28 +92,29 @@ const MapView = () => {
             </div>
 
             {/* Fullscreen Map */}
-            <div className="map-wrapper">
-                <MapContainer 
-                    center={[lat, lng]} 
-                    zoom={12} 
-                    style={{ width: "100%", height: "100%" }}
-                    zoomControl={false}
-                >
+            <div className="map-wrapper" ref={mapRef}>
+                <MapContainer center={[lat, lng]} zoom={12} style={{ width: "100%", height: "100%" }} zoomControl={false}>
                     <TileLayer
                         attribution='Tiles &copy; Esri &mdash; Source: Esri, GIS User Community'
                         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     />
-
-                    {/* Move the map dynamically */}
                     <MoveMapToLocation lat={lat} lng={lng} />
-
-                    {/* Marker for Selected Location */}
                     <Marker position={[lat, lng]}>
                         <Popup>Selected Location: {lat.toFixed(4)}, {lng.toFixed(4)}</Popup>
                     </Marker>
-
-                    {/* Farm Polygon */}
                     <FarmPolygon />
+
+                    {/* Overlay NDVI Image */}
+                    {ndviImage && (
+                        <ImageOverlay
+                            url={ndviImage}
+                            bounds={[
+                                [lat + 0.05, lng - 0.05], // Top-left corner
+                                [lat - 0.05, lng + 0.05], // Bottom-right corner
+                            ]}
+                            opacity={0.6}
+                        />
+                    )}
                 </MapContainer>
             </div>
         </div>
