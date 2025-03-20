@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ImageOverlay, useMap } from "react-leaflet";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import FarmPolygon from "../components/FarmPolygon";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 import domtoimage from "dom-to-image";
+import NewPolygonOverlay from "../components/NewPolygonOverlay"; // ✅ Ensure the extension is .jsx
+
 
 const MoveMapToLocation = ({ lat, lng }) => {
     const map = useMap();
@@ -16,10 +18,10 @@ const MoveMapToLocation = ({ lat, lng }) => {
 };
 
 const MapView = () => {
-    const [lat, setLat] = useState(-12.5000);
-    const [lng, setLng] = useState(-55.6400);
+    const [lat, setLat] = useState(-12.545524);
+    const [lng, setLng] = useState(-55.002676);
     const [ndviImage, setNdviImage] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+    const [showNewPolygon, setShowNewPolygon] = useState(false); // ✅ New state to control the polygon visibility
     const mapRef = useRef(null);
     const navigate = useNavigate(); // ✅ Hook for navigation
 
@@ -38,7 +40,6 @@ const MapView = () => {
     const locations = [
         { name: "Farm 1", lat: -12.545524, lng: -55.002676 },
         { name: "Farm 2", lat: -12.570328158539283, lng: -54.94561289426616 },
-        { name: "Cerrado Region 🇧🇷", lat: -15.6000, lng: -47.8000 },
     ];
 
     const moveToLocation = (lat, lng) => {
@@ -84,11 +85,20 @@ const MapView = () => {
                 ))}
 
                 <button onClick={captureAndSendMap} className="capture-button">
+                    📸 Capture & Analyze
                 </button>
-                    Capture & Analyze
+
                 {/* ✅ Button to Navigate to Predictive Model Page */}
                 <button className="predictive-model-btn" onClick={() => navigate("/predictive-model")}>
                     Go to Predictive Model
+                </button>
+
+                {/* ✅ Button to Toggle New Polygon */}
+                <button 
+                    onClick={() => setShowNewPolygon(!showNewPolygon)} 
+                    className="toggle-polygon-button"
+                >
+                    {showNewPolygon ? "❌ Remove Polygon" : "🛠 Add New Polygon"}
                 </button>
             </div>
 
@@ -104,6 +114,9 @@ const MapView = () => {
                         <Popup>Selected Location: {lat.toFixed(4)}, {lng.toFixed(4)}</Popup>
                     </Marker>
                     <FarmPolygon />
+
+                    {/* ✅ Show new polygon only when activated */}
+                    {showNewPolygon && <NewPolygonOverlay />}
 
                     {/* Overlay NDVI Image */}
                     {ndviImage && (
