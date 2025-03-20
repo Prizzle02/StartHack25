@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import About from "./pages/PredictiveModel";
-import Analysis from "./pages/Analysis"; // Import Analysis Page
+import PredictiveModel from "./pages/PredictiveModel"; // Import Correct Page
+import Analysis from "./pages/Analysis";
 
 function App() {
     return (
@@ -12,7 +12,8 @@ function App() {
             <div style={{ marginTop: "70px" }}> {/* Prevent overlap with navbar */}
                 <Routes>
                     <Route path="/" element={<Analysis />} />
-                    <Route path="/analysis" element={<Analysis />} /> {/* New Page */}
+                    <Route path="/analysis" element={<Analysis />} />
+                    <Route path="/predictive-model" element={<PredictiveModel />} /> {/* ✅ Added Route */}
                 </Routes>
             </div>
         </Router>

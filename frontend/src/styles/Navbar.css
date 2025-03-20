@@ -1,7 +1,7 @@
 /* Navbar styles */
 .navbar {
     width: 100%;
-    background-color: Green;
+    background-color: #7FC940;;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -15,23 +15,21 @@
 }
 
 
-/* Flex container for logo + links */
 .nav-container {
-    width: 90%;
-    max-width: 1900px;
     display: flex;
-    justify-content: space-between; /* Logo on left, links on right */
-    align-items: left;
-    margin: 0 auto; /* Center the navbar content */
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #ffffff00; /* Adjust if needed */
+    box-shadow: 0 4px 6px #00000000; /* Optional shadow */
 }
 
-/* Logo or Brand Name */
 .logo {
-    font-size: 30px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
+    height: 40px; /* Adjust to match previous text size */
+    width: auto;
+    cursor: pointer;
 }
+
 
 /* Navigation Links */
 .nav-links {

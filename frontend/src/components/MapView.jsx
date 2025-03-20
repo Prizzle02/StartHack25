@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import FarmPolygon from "../components/FarmPolygon";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
-import domtoimage from "dom-to-image";
+//import domtoimage from "dom-to-image";
 
 const MoveMapToLocation = ({ lat, lng }) => {
     const map = useMap();

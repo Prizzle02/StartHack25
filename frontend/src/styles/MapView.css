@@ -60,7 +60,7 @@
     position: absolute;
     top: px;
     right: 50px;
-    background-color: #28a745;
+    background-color: #969591   ;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -71,7 +71,7 @@
 }
 
 .analyze-btn:hover {
-    background-color: #218838;
+    background-color: #264501  ;
 }
 /* Modal Overlay (No Grey Background) */
 .modal-overlay {

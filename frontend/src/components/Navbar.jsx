@@ -1,14 +1,24 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import navigation hook
 import "../styles/Navbar.css";
-import AnalysisModal from "./AnalysisModal"; // ✅ Import modal inside Navbar
+import AnalysisModal from "./AnalysisModal"; 
+
+import logo from "../assets/logo.png"; // ✅ Import the logo image
 
 const Navbar = () => {
     const [isModalOpen, setModalOpen] = useState(false);
+    const navigate = useNavigate(); // ✅ Hook for navigation
 
     return (
         <nav className="navbar">
             <div className="nav-container">
-                <span className="logo">Biological</span>
+                {/* ✅ Clickable Logo */}
+                <img 
+                    src={logo} 
+                    alt="Biological Logo" 
+                    className="logo" 
+                    onClick={() => navigate("/")} // ✅ Redirect to home when clicked
+                />
 
                 {/* ✅ Analyze Now button opens the modal */}
                 <button className="analyze-btn" onClick={() => setModalOpen(true)}>
@@ -23,5 +33,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
