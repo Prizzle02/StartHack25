@@ -19,6 +19,7 @@ const farmBoundary2 = [
     [-12.563001, -54.956176], // Closing the polygon
 ];
 
+// Crop Fields (Soybean, Corn, Cotton)
 const farmFields = [
     // Soybean Fields (Green)
     {
@@ -95,9 +96,24 @@ const farmFields = [
 
 const FarmPolygon = () => {
     return (
-        <Polygon positions={farmBoundary} color="green" fillOpacity={0.4}>
-            <Popup>🚜 Updated Agricultural Field</Popup>
-        </Polygon>
+        <>
+            {/* First Farm */}
+            <Polygon positions={farmBoundary1} color="green" fillOpacity={0.4}>
+                <Popup>🚜 Farm 1 - Main Field</Popup>
+            </Polygon>
+
+            {/* Second Farm */}
+            <Polygon positions={farmBoundary2} color="blue" fillOpacity={0.4}>
+                <Popup>🚜 Farm 2 - New Expansion</Popup>
+            </Polygon>
+
+            {/* Crop Fields */}
+            {farmFields.map((field, index) => (
+                <Polygon key={index} positions={field.boundary} color={field.color} fillOpacity={0.5}>
+                    <Popup>{field.name}</Popup>
+                </Polygon>
+            ))}
+        </>
     );
 };
 
