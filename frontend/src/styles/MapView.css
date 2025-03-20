@@ -1,0 +1,140 @@
+/* Main Map Container */
+.map-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex; /* Ensures sidebar and map are properly aligned */
+}
+
+/* Left Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Sidebar Titles */
+.sidebar h3 {
+    font-size: 1.2em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Sidebar Inputs & Buttons */
+.sidebar input, 
+.sidebar button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+.sidebar button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.sidebar button:hover {
+    background-color: #0056b3;
+}
+
+/* Map Wrapper (Ensures the map fills the remaining space) */
+.map-wrapper {
+    flex-grow: 1;
+    height: 100vh;
+    position: relative;
+}
+
+/* Analyze Now Button */
+.analyze-btn {
+    position: absolute;
+    top: px;
+    right: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.analyze-btn:hover {
+    background-color: #218838;
+}
+/* Modal Overlay (No Grey Background) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
+}
+
+/* Show Modal when active */
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Modal Content - Floating over the map */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 20%;
+    right: 800px;
+    z-index: 1002;
+}
+
+/* Title inside the modal */
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 1.4em;
+}
+
+/* Filter checkboxes */
+.modal-content label {
+    display: block;
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+/* Close Button */
+.modal-content button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.modal-content button:hover {
+    background-color: #c82333;
+}
