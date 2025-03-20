@@ -84,6 +84,7 @@ const MapView = () => {
                 ))}
 
                 <button onClick={captureAndSendMap} className="capture-button">
+                </button>
                     Capture & Analyze
                 {/* ✅ Button to Navigate to Predictive Model Page */}
                 <button className="predictive-model-btn" onClick={() => navigate("/predictive-model")}>
