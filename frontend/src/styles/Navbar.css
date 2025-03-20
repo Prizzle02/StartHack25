@@ -1,13 +1,19 @@
 /* Navbar styles */
 .navbar {
     width: 100%;
-    background-color: green;
-    padding: 18px 0;
+    background-color: Green;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    height: 60px; /* Adjust navbar height */
+    z-index: 1100; /* Ensures navbar stays above sidebar */
 }
+
 
 /* Flex container for logo + links */
 .nav-container {

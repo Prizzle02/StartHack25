@@ -1,23 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import "../styles/Navbar.css";
+import AnalysisModal from "./AnalysisModal"; // ✅ Import modal inside Navbar
 
 const Navbar = () => {
+    const [isModalOpen, setModalOpen] = useState(false);
+
     return (
         <nav className="navbar">
             <div className="nav-container">
-                {/* Logo or Brand Nam*/}
-                <Link to="/" className="logo">Biologicalde</Link>
+                <span className="logo">Biological</span>
 
-                {/* Navigation Links */}
-                <div className="nav-links">
-                <button className="analyze-btn" onClick={() => setShowModal(true)}>
-                Analyze Now
-            </button>
-                </div>
+                {/* ✅ Analyze Now button opens the modal */}
+                <button className="analyze-btn" onClick={() => setModalOpen(true)}>
+                    Analyze Now
+                </button>
             </div>
+
+            {/* ✅ Modal is now controlled by Navbar */}
+            <AnalysisModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
         </nav>
     );
 };
 
 export default Navbar;
+
+

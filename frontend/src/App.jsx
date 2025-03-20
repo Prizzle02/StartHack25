@@ -11,8 +11,7 @@ function App() {
             <Navbar />
             <div style={{ marginTop: "70px" }}> {/* Prevent overlap with navbar */}
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
+                    <Route path="/" element={<Analysis />} />
                     <Route path="/analysis" element={<Analysis />} /> {/* New Page */}
                 </Routes>
             </div>
