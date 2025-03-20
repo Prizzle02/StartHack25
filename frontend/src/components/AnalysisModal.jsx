@@ -6,7 +6,10 @@ const AnalysisModal = ({ isOpen, onClose }) => {
 
     return (
         <div className="analysis-modal">
-            <h2>Analysis Settings</h2>
+            
+            <div className="modal-section">
+                <button className="section-button">Analysis Settings</button>
+            </div>
 
             <div className="modal-section">
                 <button className="section-button">Environment Settings</button>
