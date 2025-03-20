@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import FarmPolygon from "../components/FarmPolygon";
 import "leaflet/dist/leaflet.css";
@@ -16,7 +17,7 @@ const MoveMapToLocation = ({ lat, lng }) => {
 const MapView = () => {
     const [lat, setLat] = useState(-12.5000);
     const [lng, setLng] = useState(-55.6400);
-    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate(); // ✅ Hook for navigation
 
     const handleUpdateLocation = () => {
         const newLat = parseFloat(document.getElementById("latInput").value);
@@ -32,7 +33,7 @@ const MapView = () => {
 
     const locations = [
         { name: "Farm 1", lat: -12.545524, lng: -55.002676 },
-        { name: "Mato Grosso 🇧🇷", lat: -12.5424, lng: -55.7213 },
+        { name: "Farm 2", lat: -12.570328158539283, lng: -54.94561289426616 },
         { name: "Cerrado Region 🇧🇷", lat: -15.6000, lng: -47.8000 },
     ];
 
@@ -56,10 +57,12 @@ const MapView = () => {
                         {loc.name}
                     </button>
                 ))}
-            </div>
 
-            {/* Analyze Now Button */}
-           
+                {/* ✅ Button to Navigate to Predictive Model Page */}
+                <button className="predictive-model-btn" onClick={() => navigate("/predictive-model")}>
+                    Go to Predictive Model
+                </button>
+            </div>
 
             {/* Fullscreen Map */}
             <div className="map-wrapper">
@@ -85,26 +88,6 @@ const MapView = () => {
                     {/* Farm Polygon */}
                     <FarmPolygon />
                 </MapContainer>
-            </div>
-
-            {/* Modal Window */}
-            <div className={`modal-overlay ${showModal ? "active" : ""}`}>
-                <div className="modal-content">
-                    <h2>Select Analysis Filters</h2>
-                    <label>
-                        <input type="checkbox" /> Soil Health
-                    </label>
-                    <label>
-                        <input type="checkbox" /> Weather Impact
-                    </label>
-                    <label>
-                        <input type="checkbox" /> Disease Risk
-                    </label>
-                    <label>
-                        <input type="checkbox" /> Crop Growth Index
-                    </label>
-                    <button onClick={() => setShowModal(false)}>Close</button>
-                </div>
             </div>
         </div>
     );
