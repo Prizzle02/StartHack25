@@ -33,11 +33,10 @@ const AnalysisModal = ({ isOpen, onActivatePolygon,onClose }) => {
                     className="analyze-button"
                     onClick={() => {
                         console.log("✅ 'lol' button clicked! Activating CropsPolygon...");
-                        setShowComponent(true); // ✅ Show component
                         onActivatePolygon();
                     }}
                 >
-                    lol
+                    Analyze
                 </button>
             </div>
                 </>

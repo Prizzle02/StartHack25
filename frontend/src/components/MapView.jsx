@@ -5,6 +5,8 @@ import FarmPolygon from "../components/FarmPolygon";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
 import NewPolygonOverlay from "../components/NewPolygonOverlay"; // ✅ Ensure the extension is .jsx
+import AnalysisModal from "../components/AnalysisModal";
+import AnalysisMarker from "../components/AnalysisMarker";
 
 const MoveMapToLocation = ({ lat, lng }) => {
     const map = useMap();
@@ -18,6 +20,15 @@ const MoveMapToLocation = ({ lat, lng }) => {
 const MapView = () => {
     const [lat, setLat] = useState(-12.545524);
     const [lng, setLng] = useState(-55.002676);
+
+    const [showAnalysisMarker, setShowAnalysisMarker] = useState(false);
+    const analysisMarkerPosition = [51.505, -0.09]; 
+    const handleActivatePolygon = () => {
+      console.log("Activating analysis polygon!");
+      setShowAnalysisMarker(true); // ✅ Show marker
+    };
+
+
     const [ndviImage, setNdviImage] = useState(null);
     const [showNewPolygon, setShowNewPolygon] = useState(false); // ✅ New state to control the polygon visibility
     const mapRef = useRef(null);
@@ -91,13 +102,7 @@ const MapView = () => {
                     Go to Predictive Model
                 </button>
 
-                {/* ✅ Button to Toggle New Polygon */}
-                <button 
-                    onClick={() => setShowNewPolygon(!showNewPolygon)} 
-                    className="toggle-polygon-button"
-                >
-                    {showNewPolygon ? "❌ Remove Polygon" : "🛠 Add New Polygon"}
-                </button>
+        
             </div>
 
             {/* Fullscreen Map */}
@@ -107,14 +112,15 @@ const MapView = () => {
                         attribution='Tiles &copy; Esri &mdash; Source: Esri, GIS User Community'
                         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     />
+                      {showAnalysisMarker && <AnalysisMarker position={analysisMarkerPosition} />}
+                    
+                    
                     <MoveMapToLocation lat={lat} lng={lng} />
                     <Marker position={[lat, lng]}>
                         <Popup>Selected Location: {lat.toFixed(4)}, {lng.toFixed(4)}</Popup>
                     </Marker>
                     <FarmPolygon />
 
-                    {/* ✅ Show new polygon only when activated */}
-                    {showNewPolygon && <NewPolygonOverlay />}
 
                     {/* Overlay NDVI Image */}
                     {ndviImage && (
