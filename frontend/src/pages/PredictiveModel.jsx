@@ -15,7 +15,7 @@ const PredictiveModel = ({ onPredict }) => {
     return (
         <div className="predictive-model">
             <div className="model-content">
-                <h1>🌾 Predict Your Farm's Future</h1>
+                <h1>Predict Your Farm's Future</h1>
                 <p>Select a date to see predicted farm conditions.</p>
 
                 <label className="date-picker">
