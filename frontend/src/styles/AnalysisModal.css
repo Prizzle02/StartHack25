@@ -18,14 +18,14 @@
     padding: 12px;
     margin: 10px 0;
     border-radius: 5px;
-    border: 1px solid #007bff;
+    border: 1px solid #7FC940;
     background-color: white;
     font-size: 1em;
     cursor: pointer;
 }
 
 .section-button:hover {
-    background-color: #007bff;
+    background-color: #7FC940;
     color: white;
 }
 
@@ -35,7 +35,7 @@
     padding: 12px;
     margin-top: 10px;
     border-radius: 5px;
-    background-color: #264501 ;
+    background-color: #264501;
     color: white;
     border: none;
     font-size: 1em;
@@ -43,7 +43,7 @@
 }
 
 .analyze-button:hover {
-    background-color: greenyellow;
+    background-color: #7FC940;
 }
 
 /* Sidebar Menu */
@@ -67,7 +67,7 @@
     width: 100%;
     padding: 5px;
     border: none;
-    background-color: #007bff;
+    background-color: #7FC940;
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -75,7 +75,7 @@
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: #7FC940;
 }
 
 

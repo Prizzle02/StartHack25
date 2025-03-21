@@ -10,7 +10,7 @@
 .sidebar {
     width: 250px;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.95);
+    background: #E1DFD8;
     padding: 15px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
@@ -38,14 +38,14 @@
 }
 
 .sidebar button {
-    background-color: #007bff;
+    background-color: #71b138 ;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 .sidebar button:hover {
-    background-color: #0056b3;
+    background-color: #4a6f1d;
 }
 
 /* Map Wrapper (Ensures the map fills the remaining space) */
@@ -60,7 +60,7 @@
     position: absolute;
     top: px;
     right: 50px;
-    background-color: #969591   ;
+    background-color: rgba(255, 255, 255, 0.1)   ;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -71,7 +71,7 @@
 }
 
 .analyze-btn:hover {
-    background-color: #264501  ;
+    background-color: rgba(255, 255, 255, 0.25)  ;
 }
 /* Modal Overlay (No Grey Background) */
 .modal-overlay {
