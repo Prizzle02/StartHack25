@@ -4,35 +4,35 @@ import { useNavigate } from "react-router-dom";
 import FarmPolygon from "../components/FarmPolygon";
 import "leaflet/dist/leaflet.css";
 import "../styles/MapView.css";
-import NewPolygonOverlay from "../components/NewPolygonOverlay"; // ✅ Ensure the extension is .jsx
 import AnalysisModal from "../components/AnalysisModal";
-import AnalysisMarker from "../components/AnalysisMarker";
 
 const MoveMapToLocation = ({ lat, lng }) => {
     const map = useMap();
     useEffect(() => {
         map.setView([lat, lng], 12);
     }, [lat, lng, map]);
-
     return null;
 };
 
 const MapView = () => {
     const [lat, setLat] = useState(-12.545524);
     const [lng, setLng] = useState(-55.002676);
-
-    const [showAnalysisMarker, setShowAnalysisMarker] = useState(false);
-    const analysisMarkerPosition = [51.505, -0.09]; 
-    const handleActivatePolygon = () => {
-      console.log("Activating analysis polygon!");
-      setShowAnalysisMarker(true); // ✅ Show marker
-    };
-
-
-    const [ndviImage, setNdviImage] = useState(null);
-    const [showNewPolygon, setShowNewPolygon] = useState(false); // ✅ New state to control the polygon visibility
+    const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+    const [ndviVisible, setNdviVisible] = useState(false);
     const mapRef = useRef(null);
-    const navigate = useNavigate(); // ✅ Hook for navigation
+    const navigate = useNavigate();
+
+    // Fixed bounds for Farm 1 (adjust these according to your NDVI image coordinates)
+    const FARM1_BOUNDS = [
+        [-12.495524, -55.052676], // Top-left corner
+        [-12.595524, -54.952676]  // Bottom-right corner
+    ];
+
+    const handleActivateNDVI = () => {
+        console.log("Activating NDVI overlay");
+        setNdviVisible(true);
+        setShowAnalysisModal(false);
+    };
 
     const handleUpdateLocation = () => {
         const newLat = parseFloat(document.getElementById("latInput").value);
@@ -48,38 +48,11 @@ const MapView = () => {
 
     const locations = [
         { name: "Farm 1", lat: -12.545524, lng: -55.002676 },
-        { name: "Farm 2", lat: -12.570328158539283, lng: -54.94561289426616 },
+        { name: "Farm 2", lat: -12.570328, lng: -54.945613 },
     ];
-
-    const moveToLocation = (lat, lng) => {
-        setLat(lat);
-        setLng(lng);
-    };
-
-    const captureAndSendMap = async () => {
-        if (!mapRef.current) return;
-
-        try {
-            const dataUrl = await domtoimage.toPng(mapRef.current);
-
-            const response = await fetch("http://localhost:5000/upload", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ image: dataUrl }),
-            });
-
-            const result = await response.json();
-            if (result.ndvi_image) {
-                setNdviImage(result.ndvi_image);
-            }
-        } catch (error) {
-            console.error("Error capturing or sending the map:", error);
-        }
-    };
 
     return (
         <div className="map-container">
-            {/* Sidebar */}
             <div className="sidebar">
                 <h3>Enter Coordinates</h3>
                 <input type="number" id="latInput" placeholder="Latitude" defaultValue={lat} step="0.0001" />
@@ -88,53 +61,54 @@ const MapView = () => {
 
                 <h3>Select a Location</h3>
                 {locations.map((loc, index) => (
-                    <button key={index} onClick={() => moveToLocation(loc.lat, loc.lng)}>
+                    <button key={index} onClick={() => setLat(loc.lat) || setLng(loc.lng)}>
                         {loc.name}
                     </button>
                 ))}
 
-                <button onClick={captureAndSendMap} className="capture-button">
-                    📸 Capture & Analyze
+                <button className="analysis-button" onClick={() => setShowAnalysisModal(true)}>
+                    Open Analysis Tools
                 </button>
 
-                {/* ✅ Button to Navigate to Predictive Model Page */}
                 <button className="predictive-model-btn" onClick={() => navigate("/predictive-model")}>
                     Go to Predictive Model
                 </button>
-
-        
             </div>
 
-            {/* Fullscreen Map */}
             <div className="map-wrapper" ref={mapRef}>
-                <MapContainer center={[lat, lng]} zoom={12} style={{ width: "100%", height: "100%" }} zoomControl={false}>
+                <MapContainer 
+                    center={[lat, lng]} 
+                    zoom={12} 
+                    style={{ width: "100%", height: "100%" }}
+                    zoomControl={false}
+                >
                     <TileLayer
                         attribution='Tiles &copy; Esri &mdash; Source: Esri, GIS User Community'
                         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     />
-                      {showAnalysisMarker && <AnalysisMarker position={analysisMarkerPosition} />}
-                    
                     
                     <MoveMapToLocation lat={lat} lng={lng} />
                     <Marker position={[lat, lng]}>
-                        <Popup>Selected Location: {lat.toFixed(4)}, {lng.toFixed(4)}</Popup>
+                        <Popup>Current View: {lat.toFixed(4)}, {lng.toFixed(4)}</Popup>
                     </Marker>
                     <FarmPolygon />
 
-
-                    {/* Overlay NDVI Image */}
-                    {ndviImage && (
+                    {ndviVisible && (
                         <ImageOverlay
-                            url={ndviImage}
-                            bounds={[
-                                [lat + 0.05, lng - 0.05], // Top-left corner
-                                [lat - 0.05, lng + 0.05], // Bottom-right corner
-                            ]}
-                            opacity={0.6}
+                            url="/outputs/ndvi_farm1.png"
+                            bounds={FARM1_BOUNDS}
+                            opacity={0.7}
+                            zIndex={10}
                         />
                     )}
                 </MapContainer>
             </div>
+
+            <AnalysisModal 
+                isOpen={showAnalysisModal} 
+                onActivateNDVI={handleActivateNDVI}
+                onClose={() => setShowAnalysisModal(false)}
+            />
         </div>
     );
 };

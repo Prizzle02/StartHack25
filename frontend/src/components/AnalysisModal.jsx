@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import "../styles/AnalysisModal.css";
 
-const AnalysisModal = ({ isOpen, onActivatePolygon,onClose }) => {
-    const [activeMenu, setActiveMenu] = useState(null); // Track which menu is open
-    const [showComponent, setShowComponent] = useState(false); 
+const AnalysisModal = ({ isOpen, onActivateNDVI, onClose }) => {
+    const [activeMenu, setActiveMenu] = useState(null);
 
     if (!isOpen) return null;
 
     return (
         <div className="analysis-modal">
-            {/* ✅ Improved Close Button (Top-Right) */}
             <button className="close-button" onClick={onClose}>✖</button>
 
             {activeMenu === null ? (
@@ -29,16 +27,16 @@ const AnalysisModal = ({ isOpen, onActivatePolygon,onClose }) => {
                     </div>
 
                     <div className="modal-section">
-                    <button 
-                    className="analyze-button"
-                    onClick={() => {
-                        console.log("✅ 'lol' button clicked! Activating CropsPolygon...");
-                        onActivatePolygon();
-                    }}
-                >
-                    Analyze
-                </button>
-            </div>
+                        <button 
+                            className="analyze-button"
+                            onClick={() => {
+                                console.log("✅ Activating NDVI Overlay...");
+                                onActivateNDVI();
+                            }}
+                        >
+                            Analyze (Show NDVI)
+                        </button>
+                    </div>
                 </>
             ) : (
                 <div className="sidebar-menu">
