@@ -21,8 +21,8 @@ const Navbar = () => {
                 />
 
                 {/* ✅ Analyze Now button opens the modal */}
-                <button className="analyze-btn" onClick={() => setModalOpen(true)}>
-                    Analyze Now
+                <button className="analyze-option" onClick={() => setModalOpen(true)}>
+                    Analyze Options
                 </button>
             </div>
 
