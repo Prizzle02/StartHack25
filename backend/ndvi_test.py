@@ -61,6 +61,29 @@ def upload_and_process():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/process_existing_maps", methods=["GET"])
+def process_existing_maps():
+    try:
+        processed_images = []
+
+        for filename in os.listdir(UPLOAD_FOLDER):
+            if filename.lower().endswith((".png", ".jpg", ".jpeg")):
+                image_path = os.path.join(UPLOAD_FOLDER, filename)
+                ndvi = estimate_ndvi_from_rgb(image_path)
+                ndvi_buffer = save_ndvi_plot(ndvi)
+
+                output_path = os.path.join(NDVI_FOLDER, f"ndvi_{filename}")
+                with open(output_path, "wb") as f:
+                    f.write(ndvi_buffer.getvalue())
+
+                processed_images.append(output_path)
+
+        return jsonify({"message": "Processing complete!", "processed_images": processed_images})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

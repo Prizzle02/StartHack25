@@ -147,12 +147,12 @@ const FarmPolygon = () => {
 
             {/* Crop Fields */}
             {farmFields1.map((field, index) => (
-                <Polygon key={index} positions={field.boundary} color={field.color} fillOpacity={0.4}>
+                <Polygon key={index} positions={field.boundary} color={field.color} fillOpacity={0.2}>
                     <Popup>{field.name}</Popup>
                 </Polygon>
             ))}
             {farmFields2.map((field, index) => (
-                <Polygon key={index} positions={field.boundary} color={field.color} fillOpacity={0.4}>
+                <Polygon key={index} positions={field.boundary} color={field.color} fillOpacity={0.2}>
                     <Popup>{field.name}</Popup>
                 </Polygon>
             ))}
